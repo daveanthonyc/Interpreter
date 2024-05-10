@@ -3,7 +3,7 @@ export type Token = {
     Literal: string
 }
 
-export const TokenType = {
+export const TokenTypeS = {
     ILLEGAL: 'ILLEGAL',
     EOF: 'EOF',
 
@@ -27,4 +27,30 @@ export const TokenType = {
     // Keywords
     FUNCTION: 'FUNCTION',
     LET: 'LET'
+}
+
+export enum TokenType {
+    'ILLEGAL',
+    'EOF',
+
+    // Identifiers and literals
+    'IDENT',
+    'INT',
+
+    // Operators
+    '=',
+    '+',
+
+    // Delimiters
+    ',',
+    ';',
+
+    '(',
+    ')',
+    '{',
+    '}',
+
+    // Keywords
+    'FUNCTION',
+    'LET'
 }
