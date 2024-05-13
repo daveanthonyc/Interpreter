@@ -1,6 +1,6 @@
 export type Token = {
-    Type: TokenType,
-    Literal: string
+    type: TokenType,
+    literal: string
 }
 
 export enum TokenType {
@@ -26,5 +26,17 @@ export enum TokenType {
 
     // Keywords
     FUNCTION,
-    LET
+    LET,
+}
+
+export const keywords = <Record<string, TokenType>>{
+    'function': TokenType.FUNCTION,
+    'let': TokenType.LET
+}
+
+export function lookupIdentifier(identifier: string): TokenType {
+    if (keywords[identifier]) {
+        return (keywords[identifier]);
+    }
+    return TokenType.IDENT;
 }
