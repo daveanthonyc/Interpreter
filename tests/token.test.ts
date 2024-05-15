@@ -3,5 +3,5 @@ import { TokenType, lookupIdentifier } from "../token.ts";
 
 Deno.test('not sure what to put', () => {
     assertEquals(lookupIdentifier('function'), TokenType.FUNCTION);
-    assertEquals(lookupIdentifier('asdf'), TokenType.INT);
+    assertEquals(lookupIdentifier('asdf'), TokenType.IDENT);
 })

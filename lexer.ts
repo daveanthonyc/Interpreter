@@ -15,7 +15,7 @@ export class Lexer {
     }
 }
 
-export function readChar(l: Lexer) {
+export function readChar(l: Lexer): void {
     if (l.readPosition >= l.input.length) {
         // because it is supposed to be ascii code for nul signifying EOF
         // I don't get this
@@ -28,7 +28,7 @@ export function readChar(l: Lexer) {
     l.readPosition++;
 }
 
-export function nextToken(l: Lexer) {
+export function nextToken(l: Lexer): Token {
     skipToNextChar(l);
     let tok: Token;
 
@@ -54,22 +54,23 @@ export function nextToken(l: Lexer) {
         case '{':
             tok = newToken(TokenType.LBRACE, l.ch);
             break;
-        case '{':
+        case '}':
             tok = newToken(TokenType.RBRACE, l.ch);
             break;
         case '0':
             tok = newToken(TokenType.EOF, '');
             break;
-
         default:
             if (isAlpha(l.ch)) {
+                // lookupIdentifier <- most likely 
                 const word = readIdentifier(l);
-                tok = {type: lookupIdentifier(word), literal: word} as Token;
+                tok = { type: lookupIdentifier(word), literal: word } as Token;
                 return tok;
             } else if (isNumber(l.ch)) {
                 // number checking implementation can be cause of error:
                 const num = readNumber(l);
-                tok = {type: TokenType.INT, literal: num} as Token;
+                tok = { type: TokenType.INT, literal: num } as Token;
+                return tok;
             } else {
                 tok = newToken(TokenType.ILLEGAL, l.ch);
             }
@@ -92,6 +93,10 @@ export function readNumber(l: Lexer): string {
 
     while (isNumber(l.ch)) {
         num += l.ch;
+        if (!isNumber(l.input[l.readPosition])) {
+            break;
+        }
+
         readChar(l);
     }
 
@@ -109,6 +114,10 @@ export function readIdentifier(l: Lexer): string {
 
     while (isAlpha(l.ch)) {
         identifier += l.ch;
+        // if next element is not alpha, then continue;
+        if (!isAlpha(l.input[l.readPosition])) {
+            break;
+        }
         readChar(l);
     }
 

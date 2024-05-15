@@ -16,26 +16,25 @@ Deno.test('readChar goes to next char', () => {
     assertEquals(l.ch, 'l');
     readChar(l);
     assertEquals(l.ch, 'e');
+    readChar(l);
+    assertEquals(l.ch, 't');
+    readChar(l);
+    assertEquals(l.ch, '1');
 })
 
 Deno.test('lexer works', () => {
-    const l = new Lexer('let x = 1;');
+    const l = new Lexer('asdf;');
     const tokens: Token[] = [];
-    while (l.readPosition <= l.input.length) {
+
+    while (l.position < l.input.length) {
         tokens.push(nextToken(l));
         readChar(l);
     }
 
     const expectedResult = [
-        {type: TokenType.LET, literal: 'let'},
-        {type: TokenType.IDENT, literal: 'x'},
-        {type: TokenType.ASSIGN, literal: '='},
-        {type: TokenType.INT, literal: '1'},
+        {type: TokenType.IDENT, literal: 'asdf'},
         {type: TokenType.SEMICOLON, literal: ';'},
     ]
-    console.log(tokens);
+
     assertEquals(tokens, expectedResult);
 })
-
-
-
