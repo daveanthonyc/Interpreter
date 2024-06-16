@@ -14,6 +14,9 @@ export enum token {
     // Operators
     ASSIGN,
     PLUS,
+    BANG,
+    ASTERISK,
+    SLASH,
     // Delimiters
     COMMA,
     SEMICOLON,
@@ -24,11 +27,22 @@ export enum token {
     // Keywords
     FUNCTION,
     LET,
+    RETURN,
+    TRUE,
+    FALSE,
+    IF,
+    ELSE,
+
+    LT,
+    GT
 }
 
 export const keywords: Record<string, TokenType> = {
     'fn': token.FUNCTION,
     'let': token.LET,
+    'return': token.RETURN,
+    'true': token.TRUE,
+    'false': token.FALSE,
 }
 
 export function lookupIdent(ident: string): TokenType {
